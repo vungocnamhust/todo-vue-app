@@ -2,6 +2,10 @@
   <div id="app">
     <h1>To-Do List</h1>
     <to-do-form @todo-added="addTodo"></to-do-form>
+    <h2>
+      {{ ToDoItems.filter((item) => item.done).length }} out of
+      {{ ToDoItems.length }} items completed
+    </h2>
     <ul aria-labelledby="list-summary" class="stack-large">
       <li v-for="item in ToDoItems" :key="item.id">
         <to-do-item
@@ -39,14 +43,17 @@ export default {
   methods: {
     addTodo(todoLabel) {
       console.log("New to-do added");
-      this.ToDoItems.push({id: uniqueId("todo-"), label: todoLabel, done: false});
+      this.ToDoItems.push({
+        id: uniqueId("todo-"),
+        label: todoLabel,
+        done: false,
+      });
     },
   },
 };
 </script>
 
 <style>
-
 /* Global styles */
 .btn {
   padding: 0.8rem 1rem 0.7rem;
