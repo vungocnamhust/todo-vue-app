@@ -1,14 +1,17 @@
 <template>
   <form @submit.prevent="onSubmit">
-    <label> What need to be done? </label>
+    <h2 class="label-wrapper">
+      <label> What need to be done? </label>
+    </h2>
     <input
       type="text"
       id="todo-input"
       name="new-todo"
       autocomplete="off"
       v-model.lazy.trim="label"
+      class="input__lg"
     />
-    <button type="submit">Add</button>
+    <button type="submit" class="btn btn__primary btn__lg">Add</button>
   </form>
 </template>
 
@@ -18,7 +21,11 @@ export default {
   methods: {
     onSubmit() {
       console.log("Submitted: " + this.label);
-      this.$emit("todo-added");
+      if (this.label === "") {
+        return;
+      }
+      this.$emit("todo-added", this.label);
+      this.label = "";
     },
   },
   data() {
@@ -30,19 +37,3 @@ export default {
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
-h3 {
-  margin: 40px 0 0;
-}
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-a {
-  color: #42b983;
-}
-</style>
