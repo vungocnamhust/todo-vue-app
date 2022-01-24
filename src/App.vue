@@ -6,10 +6,12 @@
     <ul aria-labelledby="list-summary" class="stack-large">
       <li v-for="item in ToDoItems" :key="item.id">
         <to-do-item
-          :label="item.label + ` ` + item.id"
+          :label="item.label"
           :done="item.done"
           :id="item.id"
           @checkbox-changed="updateDoneStatus(item.id)"
+          @item-edited="editToDo(item.id, $event)"
+          @item-deleted="deleteToDo(item.id)"
         ></to-do-item>
       </li>
     </ul>
@@ -60,6 +62,14 @@ export default {
       const toDoUpdate = this.ToDoItems.find((item) => item.id === toDoId);
       toDoUpdate.done = !toDoUpdate.done;
     },
+    deleteToDo(toDoId) {
+      const toDoIndex = this.ToDoItems.findIndex((item) => item.id === toDoId);
+      this.ToDoItems.splice(toDoIndex, 1);
+    },
+    editToDo(toDoId, newLabel) {
+      const toDoEdit = this.ToDoItems.find((item) => item.id === toDoId);
+      toDoEdit.label = newLabel;
+    }
   },
 };
 </script>
