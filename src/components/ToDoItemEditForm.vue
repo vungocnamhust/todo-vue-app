@@ -5,6 +5,7 @@
       <input
         :id="id"
         type="text"
+        ref="labelInput"
         autocomplete="off"
         v-model.lazy.trim="newLabel"
       />
@@ -23,6 +24,10 @@
 </template>
 <script>
 export default {
+  mounted() {
+    const labelInputRef = this.$refs.labelInput;
+    labelInputRef.focus();
+  },
   props: {
     label: {
       type: String,
